@@ -32,7 +32,7 @@ class App extends React.Component<{}, AppState> {
       <div className="App">
         <h1>Web MIDI API sandbox</h1>
         <DJControllerSelector
-          inputs={!this.state.nowLoading && this.state.midiAccess !== undefined ? [...this.state.midiAccess.inputs] : []}
+          inputs={!this.state.nowLoading && this.state.midiAccess !== undefined ? Array.from(this.state.midiAccess.inputs.values()) : []}
         />
       </div>
     );
