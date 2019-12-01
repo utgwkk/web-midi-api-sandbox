@@ -1,16 +1,11 @@
 import React from 'react';
 
-interface MIDIInput {
-  manufacturer: string;
-  name: string;
-}
-
 interface DJControllerSelectorItemProps {
   itemKey: string;
-  value: MIDIInput;
+  value: WebMidi.MIDIInput;
 }
 
-const controllerName = (midiInput: MIDIInput) => `${midiInput.manufacturer} ${midiInput.name}`;
+const controllerName = (midiInput: WebMidi.MIDIInput) => `${midiInput.manufacturer} ${midiInput.name}`;
 
 const DJControllerSelectorItem: React.FC<DJControllerSelectorItemProps> = (props) => (
   <option value={props.itemKey}>{controllerName(props.value)}</option>

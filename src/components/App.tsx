@@ -3,25 +3,23 @@ import DJControllerSelector from './DJControllerSelector';
 
 interface AppState {
   nowLoading: boolean;
-  midiAccess: any;
+  midiAccess?: WebMidi.MIDIAccess;
 }
 
 class App extends React.Component<{}, AppState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      nowLoading: true,
-      midiAccess: null
+      nowLoading: true
     }
   }
 
   componentDidMount() {
     // To prevent compile error
-    const _navigator: any = navigator;
-    if (_navigator.requestMIDIAccess === undefined)
+    if (navigator.requestMIDIAccess === undefined)
       throw new Error('Web MIDI API unavailable')
 
-    _navigator.requestMIDIAccess().then((midiAccess: any) => {
+    navigator.requestMIDIAccess().then((midiAccess: WebMidi.MIDIAccess) => {
       this.setState({
         nowLoading: false,
         midiAccess
@@ -34,7 +32,7 @@ class App extends React.Component<{}, AppState> {
       <div className="App">
         <h1>Web MIDI API sandbox</h1>
         <DJControllerSelector
-          inputs={!this.state.nowLoading ? [...this.state.midiAccess.inputs] : []}
+          inputs={!this.state.nowLoading && this.state.midiAccess !== undefined ? [...this.state.midiAccess.inputs] : []}
         />
       </div>
     );

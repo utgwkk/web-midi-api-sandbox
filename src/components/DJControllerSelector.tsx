@@ -3,8 +3,16 @@ import DJControllerSelectorItem from './DJControllerSelectorItem';
 
 const notSelectedKey = 'not-selected';
 
-class DJControllerSelector extends React.Component<any, any> {
-  constructor(props: any) {
+interface DJControllerSelectorProps {
+  inputs: [string, WebMidi.MIDIInput][];
+}
+
+interface DJControllerSelectorState {
+  selected: string;
+}
+
+class DJControllerSelector extends React.Component<DJControllerSelectorProps, DJControllerSelectorState> {
+  constructor(props: DJControllerSelectorProps) {
     super(props);
     this.state = {
       selected: notSelectedKey
@@ -25,7 +33,7 @@ class DJControllerSelector extends React.Component<any, any> {
       <select onChange={this.handleChange}>
         <option value={notSelectedKey}>Select DJ controller</option>
         {
-          this.props.inputs.map(([k, v]: any) => {
+          this.props.inputs.map(([k, v]: [string, WebMidi.MIDIInput]) => {
             return <DJControllerSelectorItem key={k} itemKey={k} value={v} />
           })
         }
