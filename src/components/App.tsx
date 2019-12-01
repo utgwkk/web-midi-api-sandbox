@@ -1,9 +1,10 @@
 import React from 'react';
-import DJControllerSelector from './DJControllerSelector';
+import { DJControllerSelector, notSelectedKey } from './DJControllerSelector';
 
 interface AppState {
   nowLoading: boolean;
   midiAccess?: WebMidi.MIDIAccess;
+  currentControllerId?: string;
 }
 
 class App extends React.Component<{}, AppState> {
@@ -19,6 +20,8 @@ class App extends React.Component<{}, AppState> {
     if (navigator.requestMIDIAccess === undefined)
       throw new Error('Web MIDI API unavailable')
 
+    this.selectController(notSelectedKey);
+
     navigator.requestMIDIAccess().then((midiAccess: WebMidi.MIDIAccess) => {
       this.setState({
         nowLoading: false,
@@ -27,12 +30,23 @@ class App extends React.Component<{}, AppState> {
     });
   }
 
+  selectController(id: string) {
+    const newState = Object.assign({}, this.state, { currentControllerId: id });
+    this.setState(newState);
+  }
+
   render() {
     return (
       <div className="App">
         <h1>Web MIDI API sandbox</h1>
+        <div>current: {this.state.currentControllerId}</div>
         <DJControllerSelector
-          inputs={!this.state.nowLoading && this.state.midiAccess !== undefined ? Array.from(this.state.midiAccess.inputs.values()) : []}
+          inputs={
+            !this.state.nowLoading && this.state.midiAccess !== undefined
+              ? Array.from(this.state.midiAccess.inputs.values())
+              : []
+          }
+          onChange={this.selectController.bind(this)}
         />
       </div>
     );
