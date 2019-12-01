@@ -16,7 +16,6 @@ class App extends React.Component<{}, AppState> {
   }
 
   componentDidMount() {
-    // To prevent compile error
     if (navigator.requestMIDIAccess === undefined)
       throw new Error('Web MIDI API unavailable')
 
