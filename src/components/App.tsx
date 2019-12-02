@@ -21,6 +21,10 @@ class App extends React.Component<{}, AppState> {
 
     this.selectController(notSelectedKey);
 
+    this.requestMidiAccess();
+  }
+
+  requestMidiAccess() {
     navigator.requestMIDIAccess().then((midiAccess: WebMidi.MIDIAccess) => {
       this.setState({
         ...this.state,
@@ -50,6 +54,7 @@ class App extends React.Component<{}, AppState> {
           }
           onChange={this.selectController.bind(this)}
         />
+        <button onClick={() => this.requestMidiAccess()}>Refresh</button>
       </div>
     );
   }
