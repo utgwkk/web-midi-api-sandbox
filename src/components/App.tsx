@@ -23,6 +23,7 @@ class App extends React.Component<{}, AppState> {
 
     navigator.requestMIDIAccess().then((midiAccess: WebMidi.MIDIAccess) => {
       this.setState({
+        ...this.state,
         nowLoading: false,
         midiAccess
       });
@@ -30,8 +31,10 @@ class App extends React.Component<{}, AppState> {
   }
 
   selectController(id: string) {
-    const newState = Object.assign({}, this.state, { currentControllerId: id });
-    this.setState(newState);
+    this.setState({
+      ...this.state,
+      currentControllerId: id
+    });
   }
 
   render() {
