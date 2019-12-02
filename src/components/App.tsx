@@ -31,6 +31,8 @@ class App extends React.Component<{}, AppState> {
         nowLoading: false,
         midiAccess
       });
+    }).catch((err) => {
+      throw err;
     });
   }
 
