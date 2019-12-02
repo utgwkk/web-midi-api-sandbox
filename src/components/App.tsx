@@ -46,17 +46,19 @@ class App extends React.Component<{}, AppState> {
   render() {
     return (
       <div className="App">
-        <h1>Web MIDI API sandbox</h1>
-        <div>current: {this.state.currentControllerId}</div>
-        <DJControllerSelector
-          inputs={
-            !this.state.nowLoading && this.state.midiAccess !== undefined
-              ? Array.from(this.state.midiAccess.inputs.values())
-              : []
-          }
-          onChange={this.selectController.bind(this)}
-        />
-        <button onClick={() => this.requestMidiAccess()}>Refresh</button>
+        <div>
+          <h1>Web MIDI API sandbox</h1>
+          <div>current: {this.state.currentControllerId}</div>
+          <DJControllerSelector
+            inputs={
+              !this.state.nowLoading && this.state.midiAccess !== undefined
+                ? Array.from(this.state.midiAccess.inputs.values())
+                : []
+            }
+            onChange={this.selectController.bind(this)}
+          />
+          <button onClick={() => this.requestMidiAccess()}>Refresh</button>
+        </div>
       </div>
     );
   }
